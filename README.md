@@ -1,2 +1,2 @@
 # terraform-test
-Quick Terraform Testing
+main.tf file for quick Terraform testing on Google Cloud Platform
