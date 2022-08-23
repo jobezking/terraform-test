@@ -19,25 +19,3 @@ provider "google" {
   region  = "us-central1"
   zone    = "us-central1-f"
 }
-
-resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
-}
-
-resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-instance"
-  machine_type = "t2a-standard-1"
-  zone         = "us-central1-f"
-  boot_disk {
-    initialize_params {
-      image = var.arm-image
-    }
-  }
-  network_interface {
-    network = google_compute_network.vpc_network.name
-  }
-}
-
-resource "google_compute_address" "vm_static_ip" {
-  name = "terraform-static-ip"
-}
