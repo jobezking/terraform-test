@@ -20,6 +20,18 @@ provider "google" {
   zone    = "us-central1-f"
 }
 
+variable "vm_names"{
+  description = "list of the virtual machine names"
+  type = list(string)
+  default = ["vm1", "vm2", "vm3", "vm4", "vm5"]
+}
+
+variable "more_vm_names"{
+  description = "list of the network interface names"
+  type = list(string)
+  default = ["vm6", "vm7", "vm8", "vm9", "vm0"]
+}
+
 resource "google_compute_instance" "vm_instance" {
   count = 3
   name         = "terraform-instance${count.index}"
@@ -34,19 +46,6 @@ resource "google_compute_instance" "vm_instance" {
     network = "default"
   }
 }
-
-variable "vm_names"{
-  description = "list of the virtual machine names"
-  type = list(string)
-  default = ["vm1", "vm2", "vm3", "vm4", "vm5"]
-}
-
-variable "net_names"{
-  description = "list of the network interface names"
-  type = list(string)
-  default = ["nic0", "nic1", "nic2", "nic3", "nic4"]
-}
-
 
 resource "google_compute_instance" "named_instance" {
   count = length(var.vm_names)
@@ -64,7 +63,7 @@ resource "google_compute_instance" "named_instance" {
 }
 
 resource "google_compute_instance" "each_instance" {
-  for_each = toset(var.vm_names)
+  for_each = toset(var.more_vm_names)
   name         = each.value
   machine_type = "f1-micro"
   zone         = "us-central1-f"
@@ -76,6 +75,7 @@ resource "google_compute_instance" "each_instance" {
   network_interface {
     #for_each = toset(var.net_names)
     #name         = each.value
+    #name = google_compute_instance.each_instance[each.key].name.terraform-nic
     network = "default"
   }
 }
