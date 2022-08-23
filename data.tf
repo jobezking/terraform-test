@@ -11,5 +11,6 @@ output "vm_name" {
 }
 
 output "each_vm_name" {
-    value = google_compute_instance.each_instance.name
+    value = google_compute_instance.each_instance
+    sensitive = true
 }

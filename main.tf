@@ -13,8 +13,8 @@ terraform {
 }
 
 provider "google" {
-  #credentials = file("/mnt/chromeos/removable/expand/terraform-auth/terraform-gcp-77.json")
-  credentials = file("/home/jeking/Desktop/terraform-auth/terraform-gcp-77.json")
+  credentials = file("/mnt/chromeos/removable/expand/terraform-auth/terraform-gcp-77.json")
+  #credentials = file("/home/jeking/Desktop/terraform-auth/terraform-gcp-77.json")
   project = "terraform-gcp-77"
   region  = "us-central1"
   zone    = "us-central1-f"
@@ -40,6 +40,13 @@ variable "vm_names"{
   type = list(string)
   default = ["vm1", "vm2", "vm3", "vm4", "vm5"]
 }
+
+variable "net_names"{
+  description = "list of the network interface names"
+  type = list(string)
+  default = ["nic0", "nic1", "nic2", "nic3", "nic4"]
+}
+
 
 resource "google_compute_instance" "named_instance" {
   count = length(var.vm_names)
@@ -67,6 +74,8 @@ resource "google_compute_instance" "each_instance" {
     }
   }
   network_interface {
+    #for_each = toset(var.net_names)
+    #name         = each.value
     network = "default"
   }
 }
