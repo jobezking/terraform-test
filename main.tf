@@ -55,3 +55,18 @@ resource "google_compute_instance" "named_instance" {
     network = "default"
   }
 }
+
+resource "google_compute_instance" "each_instance" {
+  for_each = toset(var.vm_names)
+  name         = each.value
+  machine_type = "f1-micro"
+  zone         = "us-central1-f"
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+  network_interface {
+    network = "default"
+  }
+}
