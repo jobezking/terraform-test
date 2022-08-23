@@ -13,7 +13,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = file("/home/jeking/Desktop/terraform-auth/terraform-gcp-77.json")
+  credentials = file("/mnt/chromeos/removable/expand/terraform-auth/terraform-gcp-77.json")
 
   project = "terraform-gcp-77"
   region  = "us-central1"
