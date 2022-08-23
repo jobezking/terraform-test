@@ -5,3 +5,7 @@ data "google_compute_instance" "example"{
 output "zone" {
     value = data.google_compute_instance.example.zone
 }
+
+output "vm_name" {
+    value = google_compute_instance.named_instance[*].name
+}
