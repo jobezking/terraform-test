@@ -26,6 +26,18 @@ variable "bucket_names"{
   default = ["terraform-gcp-77-bucket-0", "terraform-gcp-77-bucket-1", 
               "terraform-gcp-77-bucket-2", "terraform-gcp-77-bucket-3", "terraform-gcp-77-bucket-4"]
 }
+variable "more_bucket_names"{
+  description = "list of the virtual machine names"
+  type = list(string)
+  default = ["terraform-gcp-77-bucket-5", "terraform-gcp-77-bucket-6", 
+              "terraform-gcp-77-bucket-7", "terraform-gcp-77-bucket-8", "terraform-gcp-77-bucket-9"]
+}
+
+resource "google_storage_bucket" "for_each" {
+  for_each = toset(var.more_bucket_names)
+  name          = each.value
+  location      = "US"
+}
 
 resource "google_storage_bucket" "count_index" {
   count = length(var.bucket_names)
